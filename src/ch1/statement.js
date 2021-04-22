@@ -17,7 +17,6 @@ function usd(aNumber) {
 
 function statement() {
   let totalAmount = 0;
-  let volumeCredits = 0;
   let result = `Statement for ${invoice.customer}\n`;
 
   for (let perf of invoice.performances) {
@@ -28,6 +27,7 @@ function statement() {
     totalAmount += amountFor(perf);
   }
 
+  let volumeCredits = 0; //변수 선언을 반복문 앞으로 이동
   for (let perf of invoice.performances) {
     volumeCredits += volumeCreditsFor(perf);
   }
