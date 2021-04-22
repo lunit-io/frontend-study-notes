@@ -1,6 +1,6 @@
-import { statement } from './index'
-import invoice from './invoices.json'
-import plays from './plays.json'
+import statement from './statement'
+import invoice from './data/invoices.json'
+import plays from './data/plays.json'
 
 const result = `Statement for BigCo
  Hamlet: $650.00 (55 seats)
