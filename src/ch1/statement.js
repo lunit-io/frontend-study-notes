@@ -4,18 +4,23 @@ function statement(invoice, plays) {
   statementData.performances = invoice.performances.map(enrichPerformance);
 
   return renderPlainText(statementData, plays); // 중간 데이터 구조를 인수로 전달
+
+  function enrichPerformance(aPerformance) {
+    const result = Object.assign({}, aPerformance); // 얕은 복사 수행
+    result.play = playFor(result);
+    return result;
+  }
+
+  function playFor(aPerformance) {
+    return plays[aPerformance.playID];
+  }
 }
 
-function enrichPerformance(aPerformance) {
-  const result = Object.assign({}, aPerformance); // 얕은 복사 수행
-  return result;
-}
-
-function renderPlainText(data, plays) {
+function renderPlainText(data) {
   let result = `Statement for ${data.customer}\n`;
 
   for (let perf of data.performances) {
-    result += ` ${playFor(perf).name}: ${usd(amountFor(perf) / 100)} (${
+    result += ` ${perf.play.name}: ${usd(amountFor(perf) / 100)} (${
       perf.audience
     } seats)\n`;
   }
@@ -32,10 +37,6 @@ function renderPlainText(data, plays) {
     }
 
     return result;
-  }
-
-  function playFor(aPerformance) {
-    return plays[aPerformance.playID];
   }
 
   function usd(aNumber) {
@@ -58,7 +59,7 @@ function renderPlainText(data, plays) {
     let result = 0;
     result += Math.max(aPerformance.audience - 30, 0);
 
-    if ("comedy" === playFor(aPerformance).type)
+    if ("comedy" === aPerformance.play.type)
       result += Math.floor(aPerformance.audience / 5);
 
     return result;
@@ -67,9 +68,10 @@ function renderPlainText(data, plays) {
   function amountFor(aPerformance) {
     let result = 0;
 
-    switch (playFor(aPerformance).type) {
+    switch (aPerformance.play.type) {
       case "tragedy":
         result = 40000;
+
         if (aPerformance.audience > 30) {
           result += 1000 * (aPerformance.audience - 30);
         }
@@ -81,7 +83,7 @@ function renderPlainText(data, plays) {
         }
         break;
       default:
-        throw new Error(`unknown type: ${playFor(aPerformance).type}`);
+        throw new Error(`unknown type: ${aPerformance.play.type}`);
     }
     return result;
   }
