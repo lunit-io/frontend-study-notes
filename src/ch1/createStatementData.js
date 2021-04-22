@@ -7,9 +7,9 @@ export default function createStatementData(invoice, plays) { // 중간 데이�
   return result
 
   function enrichPerformance(aPerformance) {
-    const calculator = new PerformanceCalculator(aPerformance)
+    const calculator = new PerformanceCalculator(aPerformance, playFor(aPerformance))
     const result = Object.assign({}, aPerformance) // 얕은 복사 수행
-    result.play = playFor(result)
+    result.play = calculator.play
     result.amount = amountFor(result)
     result.volumeCredits = volumeCreditsFor(result)
     return result
@@ -64,7 +64,8 @@ export default function createStatementData(invoice, plays) { // 중간 데이�
 
 // 공연료 계산기
 class PerformanceCalculator {
-  constructor(aPerformance) {
+  constructor(aPerformance, aPlay) {
     this.performance = aPerformance
+    this.play = aPlay
   }
 }
