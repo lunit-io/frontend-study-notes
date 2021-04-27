@@ -33,6 +33,9 @@ function createStatementData(invoice, plays) {
 
 export default createStatementData;
 
+function createPerformanceCalculator(aPerformance, aPlay) {
+  return new PerformanceCalculator(aPerformance, aPlay);
+}
 class PerformanceCalculator {
   constructor(aPerformance, aPlay) {
     this.performance = aPerformance;
