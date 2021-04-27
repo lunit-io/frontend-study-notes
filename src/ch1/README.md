@@ -6,6 +6,8 @@
 
 > 프로그램이 새로운 기능을 추가하기에 편한 구조가 아니라면, 먼저 기능을 추가하기 쉬운 형태로 리팩토링하고 나서 원하는 기능을 추가한다.
 
+<br />
+
 ## 과정
 
 0. 리팩토링하기 전에 제대로 된 테스트부터 마련
@@ -47,7 +49,7 @@
 ```diff
 - const play = plays[perf.playID];
 + function playFor(aPerformance) {
-+ 	return plays[aPerformance.playID];
++   return plays[aPerformance.playID];
 + }
 + const play = playFor(perf);
 ```
@@ -70,7 +72,7 @@
 + let thisAmount = amountFor(perf);
 - function amountFor(aPerformance, play) {
 + function amountFor(aPerformance) {
-+ siwtch (playFor(aPerformance.type)) {
++   siwtch (playFor(aPerformance.type)) {
 ```
 
 지역변수를 제거해서 얻는 가장 큰 장점은 추출 작업이 훨씬 쉬워진다는 것이다.
@@ -156,7 +158,7 @@ function renderHtml(data) {
 
 <br />
 
-## 4. 다형성을 활요해 계산 코드 재구성하기
+## 3. 다형성을 활요해 계산 코드 재구성하기
 
 연극 장르를 추가하고 장르마다 공연료와 적립 포인트 계산법을 다르게 지정하도록 기능을 수정해보자.
 
@@ -188,8 +190,8 @@ class PerformanceCalculator {
 
 ```diff
 function enrichPerformance(aPerformance) {
--	const claculator = new PerformanceCalculator(aPerformance, playFor(aPerformance));
-+ const claculater = const calculator = createPerformanceCalculator(aPerformance, playFor(aPerformance));
+-  const claculator = new PerformanceCalculator(aPerformance, playFor(aPerformance));
++  const claculator = const calculator = createPerformanceCalculator(aPerformance, playFor(aPerformance));
 }
 ```
 
@@ -216,7 +218,7 @@ class ComedyCalculator extends PerformanceCalculator {
 
 <br />
 
-### ### 조건부 로직을 다형성으로 바꾸기
+### 조건부 로직을 다형성으로 바꾸기
 
 ```js
 class PerformanceCalculator {
