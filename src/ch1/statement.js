@@ -4,12 +4,13 @@ import plays from "./data/plays.json";
 const invoice = invoices[0];
 
 function statement() {
-  return renderPlainText(invoice, plays);
+  const statementData = {};
+  return renderPlainText(statementData, invoice, plays);
 }
 
 export default statement;
 
-function renderPlainText(invoice, plays) {
+function renderPlainText(data, invoice, plays) {
   let result = `Statement for ${invoice.customer}\n`;
 
   for (let perf of invoice.performances) {
