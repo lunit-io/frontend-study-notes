@@ -4,11 +4,11 @@ import createStatementData from "./createStatementData";
 
 const invoice = invoices[0];
 
-function statement() {
+export function statement() {
   return renderPlainText(createStatementData(invoice, plays));
 }
 
-function htmlStatement() {
+export function htmlStatement() {
   return renderHtml(createStatementData(invoice, plays));
 }
 

@@ -1,4 +1,4 @@
-import statement from "./statement";
+import { statement } from "./statement";
 
 const result = `Statement for BigCo
  Hamlet: $650.00 (55 seats)
