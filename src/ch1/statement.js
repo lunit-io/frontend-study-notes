@@ -13,10 +13,7 @@ function statement() {
     } seats)\n`;
   }
 
-  let totalAmount = 0;
-  for (let perf of invoice.performances) {
-    totalAmount += amountFor(perf);
-  }
+  let totalAmount = appleSauce();
 
   result += `Amount owed is ${usd(totalAmount)}\n`;
   result += `You earned ${totalVolumeCredits()} credits\n`;
@@ -35,6 +32,16 @@ function usd(aNumber) {
     currency: "USD",
     minimumFractionDigits: 2,
   }).format(aNumber / 100);
+}
+
+// 나는 몹시 불편하다.. 전역 객체도 불편, 변수 인라인 함수화도 몹시 불편..
+function appleSauce() {
+  // 왜 apple sauce? do you like apple sauce?
+  let totalAmount = 0;
+  for (let perf of invoice.performances) {
+    totalAmount += amountFor(perf);
+  }
+  return totalAmount;
 }
 
 function totalVolumeCredits() {
