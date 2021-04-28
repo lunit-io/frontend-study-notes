@@ -1,5 +1,5 @@
 # ✨ Refactoring book study 
-마틴 파울러의 리팩터링 책을 매주 한 챕터씩 읽고 후기 공유 스터디 
+마틴 파울러의 리팩터링 책을 매주 한 챕터씩 읽고 후기를 공유하는 스터디 
 * [notion](https://www.notion.so/lunit/refactoring-book-study-c617086fcf2b4c2db5753f0e55a18269)
 
 ## 📖 How to study
