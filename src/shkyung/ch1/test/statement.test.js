@@ -1,3 +1,5 @@
+import invoices from "../data/invoices.json";
+import plays from "../data/plays.json";
 import statement from "../statement";
 
 const result = `Statement for BigCo
@@ -9,5 +11,5 @@ You earned 47 credits
 `;
 
 test("statement result", () => {
-  expect(statement()).toBe(result);
+  expect(statement(invoices[0], plays)).toBe(result);
 });
