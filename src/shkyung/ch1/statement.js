@@ -4,18 +4,22 @@ import plays from "./data/plays.json";
 const invoice = invoices[0];
 
 function statement() {
-  let result = `Statement for ${invoice.customer}\n`;
+  return renderPlainText(invoice, plays)
 
-  for (let perf of invoice.performances) {
-    // print line for this order
-    result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${
-      perf.audience
-    } seats)\n`;
+  function renderPlainText(invoice, plays) {
+    let result = `Statement for ${invoice.customer}\n`;
+
+    for (let perf of invoice.performances) {
+      // print line for this order
+      result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${
+        perf.audience
+      } seats)\n`;
+    }
+
+    result += `Amount owed is ${usd(totalAmount())}\n`;
+    result += `You earned ${totalVolumeCredits()} credits\n`;
+    return result;
   }
-
-  result += `Amount owed is ${usd(totalAmount())}\n`;
-  result += `You earned ${totalVolumeCredits()} credits\n`;
-  return result;
 
   function totalAmount() {
     let result = 0;
