@@ -1,4 +1,6 @@
 import statement from "./statement";
+import invoices from "./data/invoices.json";
+import plays from "./data/plays.json";
 
 const result = `Statement for BigCo
  Hamlet: $650.00 (55 seats)
@@ -9,5 +11,5 @@ You earned 47 credits
 `;
 
 test("statement result", () => {
-  expect(statement()).toBe(result);
+  expect(statement(invoices[0], plays)).toBe(result);
 });
