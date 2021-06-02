@@ -6,7 +6,7 @@
 function printOwing(invoice) {
   printBanner();
 
-  let outstanding = calculateOutstanding(invoice);
+  const outstanding = calculateOutstanding(invoice);
 
   // 마감일(dueDate)을 기록한다.
   // const today = Clock.today;
@@ -22,11 +22,11 @@ function printOwing(invoice) {
 }
 
 function calculateOutstanding(invoice) {
-  let outstanding = 0;
+  let result = 0;
   for (const o of invoice.orders) {
-    outstanding += o.amount;
+    result += o.amount;
   }
-  return outstanding;
+  return result;
 }
 
 function recordDueDate(invoice) {
