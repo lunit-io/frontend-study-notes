@@ -1,5 +1,6 @@
 // 리팩토링
 // 1. 유효범위를 벗어나는 변수가 없을 때
+// 2. 지역 변수를 사용할 때
 
 function printOwing(invoice) {
   let outstanding = 0;
@@ -22,14 +23,14 @@ function printOwing(invoice) {
 
   invoice.dueDate = new Date();
 
-  printDetail();
+  printDetail(invoice, outstanding);
+}
 
-  function printDetail() {
-    // 세부 사항을 출력한다.
-    console.log(`고객명: ${invoice.customer}`);
-    console.log(`채무액: ${outstanding}`);
-    console.log(`마감일: ${invoice.dueDate.toLocaleDateString()}`);
-  }
+function printDetail(invoice, outstanding) {
+  // 세부 사항을 출력한다.
+  console.log(`고객명: ${invoice.customer}`);
+  console.log(`채무액: ${outstanding}`);
+  console.log(`마감일: ${invoice.dueDate.toLocaleDateString()}`);
 }
 
 function printBanner() {
