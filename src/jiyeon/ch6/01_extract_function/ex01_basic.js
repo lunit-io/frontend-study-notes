@@ -21,9 +21,12 @@ function printOwing(invoice) {
   // );
   // 예제는 위처럼 되어 있으나 테스트하기 편하게 임의로 변환
 
-  invoice.dueDate = new Date();
-
+  recordDueDate(invoice);
   printDetail(invoice, outstanding);
+}
+
+function recordDueDate(invoice) {
+  invoice.dueDate = new Date();
 }
 
 function printDetail(invoice, outstanding) {
