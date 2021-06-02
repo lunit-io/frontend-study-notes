@@ -1,16 +1,12 @@
 // 리팩토링
 // 1. 유효범위를 벗어나는 변수가 없을 때
 // 2. 지역 변수를 사용할 때
+// 3. 지역변수의 값을 변경할 때
 
 function printOwing(invoice) {
-  let outstanding = 0;
-
   printBanner();
 
-  // 미해결 채무(outstanding)을 계산한다.
-  for (const o of invoice.orders) {
-    outstanding += o.amount;
-  }
+  let outstanding = calculateOutstanding(invoice);
 
   // 마감일(dueDate)을 기록한다.
   // const today = Clock.today;
@@ -23,6 +19,14 @@ function printOwing(invoice) {
 
   recordDueDate(invoice);
   printDetail(invoice, outstanding);
+}
+
+function calculateOutstanding(invoice) {
+  let outstanding = 0;
+  for (const o of invoice.orders) {
+    outstanding += o.amount;
+  }
+  return outstanding;
 }
 
 function recordDueDate(invoice) {
