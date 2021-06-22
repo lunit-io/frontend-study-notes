@@ -145,10 +145,8 @@ asyncLoad();
 의견차는 있을 수 있다고 본다.
 
 ```jsx
-(async function asyncLoad(): Promise<undefined> {
-  if (hasLoader) return undefined;
-  setHasLoader(await setLoader());
-  return undefined;
+(async function asyncLoad(): Promise<void> {
+  if (!hasLoader) setHasLoader(await setLoader());
 })();
 ```
 
@@ -343,5 +341,146 @@ async function useDICOMImageLoader({
 	isSingleImage
 }: Prop): Promise<void> {
 	// ...
+}
+```
+
+# 6.9 여러 함수를 클래스로 묶기 combine functions into class
+
+공통 데이터를 중심으로 긴밀하게 엮여 작동하는 함수 무리
+
+## 1. before
+
+```
+interface Vec2 {
+  x: number
+  y: number
+}
+
+function subtract(vec1: Vec2, vec2: Vec2) {
+  return {
+    x: vec1.x - vec2.x,
+    y: vec1.y - vec2.y,
+  };
+}
+
+function length(vec: Vec2) {
+  return Math.sqrt(vec.x * vec.x + vec.y * vec.y);
+}
+
+function normalize(vec: Vec2) {
+  let len = length(vec);
+  if (len > 0) {
+    len = 1 / len;
+  }
+  return {
+    x: vec.x * len,
+    y: vec.y * len,
+  };
+}
+
+// ...
+
+const width = window.innerWidth;
+const height = window.innerHeight;
+const v1 = { x: width / 2 - 50, y: height / 2 - 50 };
+const v2 = { x: width / 2 + 50, y: height / 2 + 50 };
+const v3 = normalize(subtract(v1, v2));
+// ...
+```
+
+## 2. after
+
+```
+class Vec2 {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  get length() {
+    return Math.sqrt(this.x * this.x + this.y * this.y);
+  }
+
+  subtract(vec) {
+    return new Vec2(this.x - vec.x, this.y - vec.y);
+  }
+
+  get normalize() {
+    var len = this.length;
+    if (len > 0) {
+      len = 1 / len;
+    }
+    return new Vec2(this.x * len, this.y * len);
+  }
+
+  // ...
+}
+
+const width = window.innerWidth;
+const height = window.innerHeight;
+const v1 = new Vec2(width / 2 - 50, height / 2 - 50);
+const v2 = new Vec2(width / 2 + 50, height / 2 + 50);
+const v3 = v1.subtract(v2).normalize;
+new Rectangle(new Vec2(width / 2, 0), width, 3, 0)
+// ...
+```
+
+타입스크립트 및 es 모듈 덕분에 클래스 없이도 간결하게 코드를 작성할 수 있고,
+pipe 등을 사용하면 중첩 함수로 인한 복잡함도 해소할 수 있으니 취향에 따라 선택하겠지만,
+벡터, 도형 등 관련 메서드를 클래스로 묶어서 사용하는 게 더 간편하다고 생각되는 경우가 있다.
+
+# 6.10 여러 함수를 변환 함수로 묶기 combine functions into transform
+
+도출 로직 반복 방지
+
+```
+function vecUtil(vec: Vec2) {
+  const v = { ...vec };
+  v.length = Math.sqrt(v.x * v.x + v.y * v.y);
+  const magnitude = v.length > 0 ? 1 / v.length : v.length;
+  v.normalize = {
+    x: v.x * magnitude,
+    y: v.y * magnitude
+  }
+  return v
+}
+const v5 = vecUtil({ x: -100, y: -100 });
+/* {
+  x: -100,
+  y: -100,
+  length: 141.4213562373095,
+  normalize: {
+    x: -0.7071067811865476,
+    y: -0.7071067811865476
+  }
+}
+*/
+```
+
+# 6.11 단계 쪼개기 split phase
+
+```
+export function DICOMImageViewer({
+  // ...
+}): JSX.Element {
+  // ...
+  useCornerstone(elRef.current)                     // 1. cornerstone.js enable
+  useImageLoader({                                  // 2. cornerstoneWADOImageLoader 로드/등록 및 이미지 로드/디스플레이
+    imageId,
+    element: elRef.current,
+    onError,
+    requestInterceptor,
+    setLoader: () => setWadoImageLoader(onError),
+    initialViewportRef,
+    onViewportChange,
+  })
+  useViewportUpdate(elRef.current, viewport)         // 3. 뷰포트 처리
+  useViewportInteraction(elRef.current, interaction) // 4. 뷰포트 인터랙션 처리
+
+  return (
+    <ViewerWrapper ref={elRef} Progress={Progress}>
+      {children}
+    </ViewerWrapper>
+  )
 }
 ```
