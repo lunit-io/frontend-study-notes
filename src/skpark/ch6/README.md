@@ -4,7 +4,7 @@
 
 useMultiframe.ts
 
-```jsx
+```ts
 export function useMultiframe({
   images = [],
   initial = 0,
@@ -35,7 +35,7 @@ export function useMultiframe({
 
 useMultiframe를 export 할 때, images 값을 전달받기 위해 함수로 한 번 더 감싸야 한다.
 
-```jsx
+```ts
 export function curriedUseMultiframe(
   images: string[]
 ): ReturnCurriedUseMultiframe {
@@ -45,7 +45,7 @@ export function curriedUseMultiframe(
 
 useMultiframe 사용 사례는 이렇다.
 
-```jsx
+```ts
 const { frame, setFrame } = useMultiframe();
 ```
 
@@ -59,7 +59,7 @@ useMultiframe이란 이름은 애매모호한 면이 있다.
 
 usePrefetch.ts
 
-```jsx
+```ts
 export default function usePrefetch(images: string[]): void {
   const { onError, setHeader } = useContext(ViewContext)
 
@@ -76,7 +76,7 @@ export default function usePrefetch(images: string[]): void {
 
 useFrame.ts
 
-```jsx
+```ts
 const useFrame: UseFrame = (initial = 0) => {
   const [frame, setFrame] = useState(initial);
 
@@ -93,7 +93,7 @@ export default useFrame;
 
 뷰어에서 이미지를 prefetch 한다.
 
-```jsx
+```ts
 function DICOMImagesViewer({ imageId, images }) {
   usePrefetch(images);
   // ...
@@ -102,7 +102,7 @@ function DICOMImagesViewer({ imageId, images }) {
 
 컴퍼넌트에서 현재 프레임을 가져오거나 설정할 수 있다.
 
-```jsx
+```ts
 function App() {
   const { frame, setFrame } = useFrame();
   return (
@@ -129,7 +129,7 @@ function App() {
 
 ## 1. before
 
-```jsx
+```ts
 function asyncLoad(): Promise<undefined> {
   if (hasLoader) return undefined;
   setHasLoader(await setLoader());
@@ -144,7 +144,7 @@ asyncLoad();
 
 의견차는 있을 수 있다고 본다.
 
-```jsx
+```ts
 (async function asyncLoad(): Promise<void> {
   if (!hasLoader) setHasLoader(await setLoader());
 })();
@@ -154,7 +154,7 @@ asyncLoad();
 
 ## 1. before
 
-```jsx
+```ts
 const LINKS = [
   { href: "basic", name: "Basic Viewer" },
   { href: "multi-frame", name: "MultiFrame Viewer" },
@@ -180,7 +180,7 @@ function App() {
 
 ## 2. after
 
-```jsx
+```ts
 const LINKS = [
   { href: "basic", title: "Basic Viewer" },
   { href: "multi-frame", title: "MultiFrame Viewer" },
@@ -207,7 +207,7 @@ function App() {
 
 변수명보다 코드가 더 쉽다.
 
-```jsx
+```ts
 const progressStatus = Math.round(progress.percent * 100);
 loadingProgressMessage.sendMessage(progressStatus);
 ```
@@ -222,7 +222,7 @@ loadingProgressMessage.sendMessage(Math.round(progress.percent * 100));
 
 ## 1. before
 
-```jsx
+```ts
 function useLoadImage() {
 	// 이미지 로더를 로드한 후, 이미지를 load, display 처리
 }
@@ -239,7 +239,7 @@ useCornerstone()와 일관성을 맞춘다.
 
 이미지 로더를 사용한다는 이름이 의미에 더 맞는다고 생각한다.
 
-```jsx
+```ts
 function useImageLoader() {
 	// 이미지 로더를 로드한 후, 이미지를 load, display 처리
 }
@@ -254,14 +254,14 @@ function App() {
 
 cornerstone.js에서 뷰포트를 가져오기/설정하기 예
 
-```jsx
+```ts
 cornerstone.getViewport(element);
 cornerstone.setViewport(element, viewport);
 ```
 
 insight-viewer 프로젝트에서는 cornerstone.js api 호출을 한 군데에서 관리하기 위해 cornerstoneHelper를 만들었다. 여기에서 cornerstone.js api를 그대로 따른다.
 
-```jsx
+```ts
 export function getViewport(
   element: HTMLDivElement
 ): cornerstone.Viewport | undefined {
@@ -278,7 +278,7 @@ export function setViewport(
 
 cornerstone.js의 getViewport, setViewport이 필요한 코드에서 이렇게 사용한다.
 
-```jsx
+```ts
 import {
   getViewport,
   setViewport,
@@ -302,7 +302,7 @@ function updateViewport(element: Element, value: Partial<Viewport>) {
 
 원래 컨텍스트가 하나 있었는데, 뷰포트 컨텍스트가 추가되면서 이 이름이 애매모호하다.
 
-```jsx
+```ts
 const Context = createContext < ContextProp > ContextDefaultValue;
 ```
 
@@ -318,7 +318,7 @@ const LoaderContext = createContext < ContextProp > ContextDefaultValue;
 
 ## 1. before
 
-```jsx
+```ts
 async function useDICOMImageLoader(imageId: string): Promise<void> {
   // ...
 }
@@ -328,7 +328,7 @@ async function useDICOMImageLoader(imageId: string): Promise<void> {
 
 매개변수가 둘 이상이면 객체로 만들어 사용한다.
 
-```jsx
+```ts
 interface Prop {
 	imageId: string
   element: HTMLDivElement | null
@@ -350,7 +350,7 @@ async function useDICOMImageLoader({
 
 ## 1. before
 
-```
+```ts
 interface Vec2 {
   x: number
   y: number
@@ -390,7 +390,7 @@ const v3 = normalize(subtract(v1, v2));
 
 ## 2. after
 
-```
+```ts
 class Vec2 {
   constructor(x, y) {
     this.x = x;
@@ -433,7 +433,7 @@ pipe 등을 사용하면 중첩 함수로 인한 복잡함도 해소할 수 있�
 
 도출 로직 반복 방지
 
-```
+```ts
 function vecUtil(vec: Vec2) {
   const v = { ...vec };
   v.length = Math.sqrt(v.x * v.x + v.y * v.y);
@@ -459,7 +459,7 @@ const v5 = vecUtil({ x: -100, y: -100 });
 
 # 6.11 단계 쪼개기 split phase
 
-```
+```ts
 export function DICOMImageViewer({
   // ...
 }): JSX.Element {

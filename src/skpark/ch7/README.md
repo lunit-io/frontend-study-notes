@@ -2,7 +2,7 @@
 
 ## 1. before
 
-```
+```ts
 let data = {
   a: 1,
   b: 2,
@@ -27,7 +27,7 @@ button.addEventListener('click', (e) => {
 변수를 업데이트를 직접 하는 대신 getter, setter로 처리하는 예.
 더미 코드입니다.
 
-```
+```ts
 interface Data {
   ...
 }
@@ -60,7 +60,7 @@ button.addEventListener('click', (e) => {
 
 좋은 사례인지는 모르겠다. 실제로 클래스보다는 함수를 사용해 캡슐화를 하는 경우가 많아서 이런 예제를 생각해보았다.
 
-```
+```ts
 function useState(initial: Array<number>) {
   let value = [...initial];
   const getState = () => value;
@@ -73,7 +73,7 @@ function useState(initial: Array<number>) {
 
 단순한 출력 이상의 기능이 필요할 때.
 
-```
+```ts
 function hexUtil(hex: string) {
   return {
     validate,
