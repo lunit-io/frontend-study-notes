@@ -12,12 +12,12 @@ let data = {
 
 input.addEventListener('change', (e) => {
   data.c = e.target.value
-  textEl.textContent = JSON.stringiry(data)
+  textEl.textContent = JSON.stringify(data)
 })
 
 button.addEventListener('click', (e) => {
   data.b = undefined
-  textEl.textContent = JSON.stringiry(data)
+  textEl.textContent = JSON.stringify(data)
 })
 ```
 
@@ -76,7 +76,6 @@ function useState(initial: Array<number>) {
 ```ts
 function hexUtil(hex: string) {
   return {
-    validate,
     toRGB,
     toHSL,
     lighterThan: (otherHex) => { /* boolean */ }
@@ -86,4 +85,86 @@ function hexUtil(hex: string) {
 
 # 7.4 임시 변수를 질의 함수로 바꾸기 replace temp with Query
 
-7.1 레코드 캡슐화하기 encapsulate record과 동일
+7.1 레코드 캡슐화하기 encapsulate record의 getState()
+
+
+# 7.5 클래스 추출하기 extract class
+
+## 1. before
+```ts
+class BlogPost {
+  private _previewTextRst: string
+  private _priviewTextHtml: string
+  private _textRst: string
+  private _textHtml: string
+
+  public set previewText(rst: string, html: string) {
+    this._previewTextRst = rst
+    this._priviewTextHtml = html
+  }
+
+  public set text(rst: string, html: string) {
+    this._textRst = text
+    this._textHtml = html
+  }
+}
+```
+
+## 2. after
+```ts
+class Text {
+  private _rst: string
+  private _html: string
+
+  constructor(rst: string, html: string) {
+    this._rst = rst
+    this._html = html
+  }
+
+  public get rst() {
+    return this._rst
+  }
+
+  public get html() {
+    return this._html
+  }
+}
+
+class BlogPost {
+  private _previewText: string
+  private _text: string
+
+  public set previewText(rst: string, html: string) {
+      this._previewText = new Text(rst, html)
+  }
+
+  public set text(rst: string, html: string) {
+    this._text = new Text(rst, html)
+  }
+}
+```
+
+# 7.7 위임 숨기기 hide delegate
+
+ cornerstone.displayImage, cornerstone.getDefaultViewportForImage를 위임하는 displayImage 메서드.
+ api 사용자는 cornerstone을 신경쓰지 않아도 된다.
+
+```ts
+export function displayImage(
+  element: HTMLDivElement,
+  image: cornerstone.Image
+): {
+  viewport: CornerstoneViewport
+  image: CornerstoneImage
+} {
+  const viewport = cornerstone.getDefaultViewportForImage(element, image)
+  cornerstone.displayImage(element, image, viewport)
+
+  return {
+    viewport,
+    image,
+  }
+}
+
+displayImage(<HTMLDivElement>element, image)
+```
