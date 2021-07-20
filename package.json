@@ -20,7 +20,8 @@
   "scripts": {
     "build": "microbundle",
     "dev": "microbundle watch",
-    "test": "jest"
+    "test": "jest",
+    "test:skpark": "jest ./src/skpark/"
   },
   "files": [
     "dist"
