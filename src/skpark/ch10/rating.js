@@ -1,5 +1,5 @@
 export default function rating(voyage, history) {
-  return new Rating(voyage, history).value;
+  return createRating(voyage, history).value;
 }
 class Rating {
   // 함수들을 Rating 클래스로 묶었다.
@@ -31,7 +31,6 @@ class Rating {
     let result = 1;
     if (this.history.length < 5) result += 4;
     result += this.history.filter((v) => v.profit < 0).length;
-    if (this.voyage.zone === "중국" && this.hasChinaHistory) result -= 2;
     return Math.max(result, 0);
   }
 
@@ -40,15 +39,14 @@ class Rating {
     let result = 2;
     if (this.voyage.zone === "중국") result += 1;
     if (this.voyage.zone === "동인도") result += 1;
-    if (this.voyage.zone === "중국" && this.hasChinaHistory(history)) {
-      result += 3;
-      if (this.history.length > 10) result += 1;
-      if (this.voyage.length > 12) result += 1;
-      if (this.voyage.length > 18) result -= 1;
-    } else {
-      if (this.history.length > 8) result += 1;
-      if (this.voyage.length > 14) result -= 1;
-    }
+    result += this.voyageAndHistoryLengthFactor;
+    return result;
+  }
+
+  get voyageAndHistoryLengthFactor() {
+    let result = 0;
+    if (this.history.length > 8) result += 1;
+    if (this.voyage.length > 14) result -= 1;
     return result;
   }
 
@@ -56,4 +54,26 @@ class Rating {
     // 중국을 경유하는가?
     return this.history.some((v) => "중국" === v.zone);
   }
+}
+
+class ExperiencedChinaRating extends Rating {
+  get captainHistoryRisk() {
+    const result = super.captainHistoryRisk - 2;
+    return Math.max(result, 0);
+  }
+
+  get voyageAndHistoryLengthFactor() {
+    let result = 0;
+    result += 3;
+    if (this.history.length > 10) result += 1;
+    if (this.voyage.length > 12) result += 1;
+    if (this.voyage.length > 18) result -= 1;
+    return result;
+  }
+}
+
+function createRating(voyage, history) {
+  if (voyage.zone === "중국" && history.some((v) => "중국" === v.zone))
+    return new ExperiencedChinaRating(voyage, history);
+  else return new Rating(voyage, history);
 }
