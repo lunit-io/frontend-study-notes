@@ -11,24 +11,13 @@ class Person {
     return this._genderCode;
   }
 }
-class Male extends Person {
-  get genderCode() {
-    return "M";
-  }
-}
-
-class Female extends Person {
-  get genderCode() {
-    return "F";
-  }
-}
 
 export function createPerson(aRecord) {
   switch (aRecord.gender) {
     case "M":
       return new Person(aRecord.name, "M");
     case "F":
-      return new Female(aRecord.name);
+      return new Person(aRecord.name, "F");
     default:
       return new Person(aRecord.name);
   }
