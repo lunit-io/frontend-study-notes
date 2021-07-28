@@ -5,6 +5,6 @@ describe("메서드 올리기", () => {
     const employee = new Employee(5);
     const department = new Department(11);
     expect(employee.annualCost).toBe(60);
-    expect(department.totalAnnualCost).toBe(132);
+    expect(department.annualCost).toBe(132);
   });
 });

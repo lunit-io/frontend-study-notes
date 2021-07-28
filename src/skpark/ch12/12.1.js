@@ -11,7 +11,7 @@ export class Employee extends Party {
 }
 
 export class Department extends Party {
-  get totalAnnualCost() {
+  get annualCost() {
     return this.monthlyCost * 12;
   }
 }
