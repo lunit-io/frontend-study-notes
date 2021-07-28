@@ -15,7 +15,7 @@ describe("슈퍼클래스 추출하기", () => {
       { monthlyCost: 11 },
     ]);
     expect(department.name).toBe("bbb");
-    expect(department.totalMonthlyCose).toBe(42);
-    expect(department.totalAnnualCost).toBe(504);
+    expect(department.monthlyCost).toBe(42);
+    expect(department.annualCost).toBe(504);
   });
 });
