@@ -8,6 +8,10 @@ class PremiumBookingDelegate {
     return this._host._show.hasOwnProperty("talkback");
   }
 
+  get hasDinner() {
+    return this._extra.hasOwnProperty("dinner") && !this._host.isPeakDay;
+  }
+
   extendBasePrice(base) {
     return Math.round(base + this._extra.premiumFee);
   }
@@ -38,6 +42,10 @@ export class Booking {
       : result;
   }
 
+  get hasDinner() {
+    return this._premiumDelegate ? this._premiumDelegate.hasDinner : undefined;
+  }
+
   _bePremium(extra) {
     this._premiumDelegate = new PremiumBookingDelegate(this, extra);
   }
@@ -47,10 +55,6 @@ export class PremiumBooking extends Booking {
   constructor(show, date, extra) {
     super(show, date);
     this._extra = extra;
-  }
-
-  get hasDinner() {
-    return this._extra.hasOwnProperty("dinner") && !this.isPeakDay;
   }
 }
 
