@@ -19,3 +19,9 @@ export class Employee {
     return `${this._name} (${this.type})`;
   }
 }
+
+export class Engineer extends Employee {
+  get type() {
+    return "engineer";
+  }
+}
