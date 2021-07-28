@@ -1,4 +1,4 @@
-export class Person {
+class Person {
   constructor(name) {
     this._name = name;
   }
@@ -10,15 +10,25 @@ export class Person {
     return "X";
   }
 }
-
-export class Male extends Person {
+class Male extends Person {
   get genderCode() {
     return "M";
   }
 }
 
-export class Female extends Person {
+class Female extends Person {
   get genderCode() {
     return "F";
+  }
+}
+
+export function createPerson(aRecord) {
+  switch (aRecord.gender) {
+    case "M":
+      return new Male(aRecord.name);
+    case "F":
+      return new Female(aRecord.name);
+    default:
+      return new Person(aRecord.name);
   }
 }
