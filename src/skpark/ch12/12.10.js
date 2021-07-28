@@ -51,19 +51,8 @@ export class Booking {
   }
 }
 
-export class PremiumBooking extends Booking {
-  constructor(show, date, extra) {
-    super(show, date);
-    this._extra = extra;
-  }
-}
-
-function createBooking(show, date) {
-  return new Booking(show, date);
-}
-
 export function createPremiumBooking(show, date, extra) {
-  const result = new PremiumBooking(show, date, extra);
+  const result = new Booking(show, date, extra);
   result._bePremium(extra);
   return result;
 }
