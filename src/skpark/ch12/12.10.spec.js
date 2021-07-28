@@ -1,4 +1,4 @@
-import { Booking, PremiumBooking } from "./12.10";
+import { Booking, createPremiumBooking } from "./12.10";
 
 describe("서브클래스를 위임으로 바꾸기", () => {
   describe("Booking", () => {
@@ -57,28 +57,36 @@ describe("서브클래스를 위임으로 바꾸기", () => {
     };
 
     it("hasTalkbackAndPickdayAndDinner", () => {
-      const booking = new PremiumBooking(hasTalkback, true, extraWithDinner);
+      const booking = createPremiumBooking(hasTalkback, true, extraWithDinner);
       expect(booking.hasTalkback).toBe(true);
       expect(booking.basePrice).toBe(145);
       expect(booking.hasDinner).toBe(false);
     });
 
     it("hasTalkbackAndPickdayAndNoDinner", () => {
-      const booking = new PremiumBooking(hasTalkback, true, extraWithoutDinner);
+      const booking = createPremiumBooking(
+        hasTalkback,
+        true,
+        extraWithoutDinner
+      );
       expect(booking.hasTalkback).toBe(true);
       expect(booking.basePrice).toBe(145);
       expect(booking.hasDinner).toBe(false);
     });
 
     it("not hasTalkbackAndPickdayAndDinner", () => {
-      const booking = new PremiumBooking(notHasTalkback, true, extraWithDinner);
+      const booking = createPremiumBooking(
+        notHasTalkback,
+        true,
+        extraWithDinner
+      );
       expect(booking.isPeakDay).toBe(true);
       expect(booking.hasTalkback).toBe(false);
       expect(booking.basePrice).toBe(111);
     });
 
     it("not hasTalkbackAndPickdayAndNoDinner", () => {
-      const booking = new PremiumBooking(
+      const booking = createPremiumBooking(
         notHasTalkback,
         true,
         extraWithoutDinner
