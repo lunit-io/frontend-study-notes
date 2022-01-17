@@ -21,3 +21,5 @@ Study note about what we studied.
 <br>
 
 ## 📚 Closed
+* **📆 Period**: 2021.4.28 ~  2021.8.4
+* **Github**: [Link](https://github.com/lunit-io/frontend-study-notes/tree/main/refactoring-book-study)
