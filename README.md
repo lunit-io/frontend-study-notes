@@ -3,7 +3,7 @@ Study note about what we studied.
 
 <br>
 
-## 🧑‍💻 Progress
+## 🧑‍💻 In Progress
 
 ###  Effective TypeScript Book Study 
 * **📆 Period**: 2021.12.1 ~ 
