@@ -5,9 +5,6 @@ Study note about what we studied.
 
 ## 🧑‍💻 In Progress
 
-###  Effective TypeScript Book Study 
-* **📆 Period**: 2021.12.1 ~ 
-* **Notion**: [Link](https://lunit.notion.site/Effective-TypeScript-Study-e59f71ded6ad44b78b91be6f7a781450)
 
 ### React Conf 2021 Study
 * **📆 Period**: 2022.1.7 ~ 
@@ -21,5 +18,11 @@ Study note about what we studied.
 <br>
 
 ## 📚 Closed
+
+###  Effective TypeScript Book Study 
+* **📆 Period**: 2021.12.1 ~ 2022.4.20
+* **Notion**: [Link](https://lunit.notion.site/Effective-TypeScript-Study-e59f71ded6ad44b78b91be6f7a781450)
+
+
 * **📆 Period**: 2021.4.28 ~  2021.8.4
 * **Github**: [Link](https://github.com/lunit-io/frontend-study-notes/tree/main/refactoring-book-study)
