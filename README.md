@@ -1,5 +1,5 @@
 # ✨ Study Notes
-Study note about what we studied.
+Frontend Study Note
 
 ## 📚 Closed
 
