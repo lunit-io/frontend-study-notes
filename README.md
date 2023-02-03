@@ -2,6 +2,9 @@
 
 Frontend Study Note
 
+<img src="https://user-images.githubusercontent.com/36615680/216536376-d9d50954-7b63-4d19-b296-844d854f6a43.gif" width=500 />
+
+
 ## 🌟 Opened
 
 ### Weekly knowledge sharing Meeting
